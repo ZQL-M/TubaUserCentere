@@ -40,7 +40,7 @@ describe('Login Page', () => {
       />,
     );
 
-    await rootContainer.findAllByText('Ant Design');
+    await rootContainer.findAllByText('User Center');
 
     act(() => {
       historyRef.current?.push('/user/login');
@@ -66,9 +66,9 @@ describe('Login Page', () => {
       />,
     );
 
-    await rootContainer.findAllByText('Ant Design');
+    await rootContainer.findAllByText('User Center');
 
-    const userNameInput = await rootContainer.findByPlaceholderText('Username: admin or user');
+    const userNameInput = await rootContainer.findByPlaceholderText('Username: admin or use');
 
     act(() => {
       fireEvent.change(userNameInput, { target: { value: 'admin' } });

@@ -7,8 +7,13 @@ spring:
     url: jdbc:mysql://localhost:3306/usercenter
     username: root
     password: 256430
+
+  session:
+    timeout: 86400
 server:
   port: 8080
+  servlet:
+    context-path: /api
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

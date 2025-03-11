@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.zql.usercenterbackend.constant.userConstant.SHOW_TUBA;
+import static com.zql.usercenterbackend.constant.userConstant.USER_LOGIN_STATE;
+
 /**
 * @author tuba
 * @description 针对表【user(用户表)】的数据库操作Service实现
@@ -32,11 +35,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * 加密盐值，避免密码验证出错
      */
     public static final String SALT = "tuba";
-
-    /**
-     * 用户登录状态键
-     */
-    public static final  String USER_LOGIN_STATE = "userLoginState";
 
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
@@ -127,22 +125,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
          * 3.对用户信息进行脱敏处理
          * todo 可以根据后续建构将这些放在DTO类中
          */
-        User safetyUser = new User();
-        safetyUser.setId(user.getId());
-        safetyUser.setUsername(user.getUsername());
-        safetyUser.setUserAccount(user.getUserAccount());
-        safetyUser.setAvatarUrl(user.getAvatarUrl());
-        safetyUser.setGender(user.getGender());
-        safetyUser.setUserPassword("tubaTUBA图八");
-        safetyUser.setEmail(user.getEmail());
-        safetyUser.setPhone("");
-        safetyUser.setCreateTime(new Date());
-        safetyUser.setUpdateTime(new Date());
+        User safetyUser = getSafeUser(user);
 
         /**
          * 4.记录用户登录态（session）
          */
         request.getSession().setAttribute(USER_LOGIN_STATE,safetyUser);
+
+        return safetyUser;
+    }
+
+    @Override
+    public User getSafeUser(User originalUser){
+        if(originalUser==null){
+            return null;
+        }
+
+        User safetyUser = new User();
+        safetyUser.setId(originalUser.getId());
+        safetyUser.setUsername(originalUser.getUsername());
+        safetyUser.setUserAccount(originalUser.getUserAccount());
+        safetyUser.setAvatarUrl(originalUser.getAvatarUrl());
+        safetyUser.setGender(originalUser.getGender());
+        safetyUser.setUserPassword(SHOW_TUBA);
+        safetyUser.setEmail(originalUser.getEmail());
+        safetyUser.setUserRole(originalUser.getUserRole());
+        safetyUser.setPhone(originalUser.getPhone());
+        safetyUser.setCreateTime(new Date());
+        safetyUser.setUpdateTime(new Date());
 
         return safetyUser;
     }

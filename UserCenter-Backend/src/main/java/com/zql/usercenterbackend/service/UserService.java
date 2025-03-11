@@ -2,6 +2,7 @@ package com.zql.usercenterbackend.service;
 
 import com.zql.usercenterbackend.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 */
 
 public interface UserService extends IService<User> {
-
     /**
      * 用户注册
      * @param userAccount
@@ -20,6 +20,7 @@ public interface UserService extends IService<User> {
      * @param checkPassword
      * @return
      */
+    @Transactional
     long userRegister(String userAccount, String userPassword, String checkPassword);
 
     /**
@@ -28,5 +29,13 @@ public interface UserService extends IService<User> {
      * @param userPassword
      * @return
      */
+    @Transactional
     User userLogin(String userAccount, String userPassword, HttpServletRequest request);
+
+    /**
+     * 用户脱敏
+     * @param originalUser
+     * @return
+     */
+    User getSafeUser(User originalUser);
 }
