@@ -8,7 +8,7 @@ import {
   LoginForm,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Helmet, history } from '@umijs/max';
+import { Helmet, history, Link } from '@umijs/max';
 import { message, Tabs } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
@@ -68,20 +68,20 @@ const Register: React.FC = () => {
 
     try {
       // 注册
-      const id = await register(values);
-      if (id > 0) {
+      const res = await register(values);
+      if (res) {
         const defaultLoginSuccessMessage = '注册成功！';
         message.success(defaultLoginSuccessMessage);
         const urlParams = new URL(window.location.href).searchParams;
         history.push(urlParams.get('redirect') || '/');
         return;
       }
-      console.log("注册失败，注册id是：", id);
+      console.log("注册失败，注册res是：", res);
       // 如果失败去设置用户错误信息
       throw new Error('注册失败,register error id = ${id}');
     } catch (error) {
       const defaultLoginFailureMessage = '注册失败，请重试！';
-      console.log(error);
+      console.log("注册失败，注册res是：", error);
       message.error(defaultLoginFailureMessage);
     }
   };
@@ -188,6 +188,13 @@ const Register: React.FC = () => {
               />
             </>
           )}
+          <div style={{
+            marginBottom: '20px'
+          }}>
+            <Link to="/user/login">
+              返回登录页
+            </Link>
+          </div>
 
         </LoginForm>
       </div>

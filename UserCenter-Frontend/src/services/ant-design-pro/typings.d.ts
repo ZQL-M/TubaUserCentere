@@ -100,4 +100,11 @@ declare namespace API {
     description?: string;
     type?: NoticeIconItemType;
   };
+
+  type BaseResponse<T> = {
+    code: number,
+    data: T,
+    message: string,
+    description: string,
+  }
 }

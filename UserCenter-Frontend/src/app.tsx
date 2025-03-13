@@ -12,6 +12,7 @@ const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 // 将注册页面的路径添加到白名单中
 const NO_NEED_LOGIN_WHITE_LIST = ["/user/register", loginPath];
+
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
@@ -140,7 +141,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request: RequestConfig = {
-  timeout: 100000,
+  timeout: 10000000,
   // other axios options you want
   errorConfig: {
     errorHandler() {
